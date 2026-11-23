@@ -165,7 +165,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Layer 2: Central Realistic Athlete Cutout Focal Anchor */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 top-16 z-20 flex items-center justify-center lg:top-12 lg:items-end">
+      <div className="pointer-events-none absolute inset-x-0 bottom-[18%] top-16 z-20 flex items-center justify-center sm:bottom-0 lg:top-12 lg:items-end">
         <div
           ref={athleteRef}
           className="relative flex h-full w-full items-center justify-center lg:items-end"
