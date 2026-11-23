@@ -178,7 +178,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }
             alt={studioContent.hero.athleteAlt}
             referrerPolicy="no-referrer"
-            className="h-[88%] w-auto max-w-full object-contain object-bottom sm:h-[92%] lg:h-[106%]"
+            className="h-[88%] w-auto max-w-full object-contain object-top sm:h-[92%] sm:object-bottom lg:h-[106%]"
           />
           {/* Subtle bottom-edge blend only so legs melt cleanly into the obsidian floor */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#050505] via-[#050505]/45 to-transparent" />
