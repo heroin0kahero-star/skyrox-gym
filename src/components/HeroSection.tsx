@@ -209,14 +209,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="mx-auto mt-auto flex max-w-2xl flex-col items-center pt-44 text-center sm:pt-52 lg:mx-0 lg:block lg:items-start lg:pt-0 lg:text-left"
         >
           <h1
-            className="hero-reveal-item font-display font-bold uppercase leading-[0.94] tracking-tight text-white"
+            className="hero-reveal-item relative w-full font-display font-bold uppercase leading-[0.94] tracking-tight text-white lg:w-auto"
             style={{
               fontSize: 'clamp(2.85rem, 6.2vw, 5.5rem)',
               textWrap: 'balance',
             }}
           >
-            <span className="block">{studioContent.hero.headlineTop}</span>
-            <span className="block text-[#F5D400]">
+            <span className="absolute inset-x-0 top-[-33.375rem] block text-center lg:static lg:top-auto lg:text-left">
+              {studioContent.hero.headlineTop}
+            </span>
+            <span className="absolute inset-x-0 top-[-14.625rem] block text-center text-[#F5D400] lg:static lg:top-auto lg:text-left">
               {studioContent.hero.headlineBottom}
             </span>
           </h1>
