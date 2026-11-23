@@ -1,0 +1,8 @@
+{
+  "name": "SKYROX Private Fitness Studio",
+  "description": "Cinematic luxury private fitness studio offering strength training, personal coaching, conditioning, and mobility.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

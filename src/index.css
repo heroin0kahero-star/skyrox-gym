@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-obsidian: #050505;
+  --color-charcoal: #101010;
+  --color-volt: #F5D400;
+  --color-muted: #A1A1A1;
+}
+
+@layer base {
+  html {
+    background-color: #050505;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+    background-color: #050505;
+  }
+
+  html.light {
+    background-color: #ffffff;
+    color: #050505;
+  }
+  html.light body {
+    background-color: #ffffff;
+    color: #050505;
+  }
+}
+
+/* Subtle editorial film grain overlay (non-interactive, compositor-safe) */
+.skyrox-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Kinetic outline letterforms for hero depth layer */
+.text-stroke-dark {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+  color: transparent;
+}
+
+.text-stroke-yellow {
+  -webkit-text-stroke: 1px rgba(245, 212, 0, 0.22);
+  color: transparent;
+}
+
+/* Vertical editorial text orientation */
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Tabular numbers utility */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SKYROX — Private Fitness Studio</title>
+    <meta
+      name="description"
+      content="Built different. Train beyond. SKYROX Private Fitness Studio delivers bespoke strength training, private coaching, and focused conditioning in an architectural dark-luxury space."
+    />
+    <meta property="og:title" content="SKYROX — Private Fitness Studio" />
+    <meta
+      property="og:description"
+      content="Built different. Train beyond. Train with purpose and transform with SKYROX Private Fitness Studio."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #logo-intro {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #1C1C1C;
+        opacity: 1;
+        transition: opacity 400ms ease;
+      }
+      #logo-intro.logo-intro--hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #logo-intro video {
+        width: min(60vw, 640px);
+        height: auto;
+        max-height: 80svh;
+        display: block;
+        background: #1C1C1C;
+        border: 0;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body class="bg-[#050505] text-white antialiased selection:bg-[#F5D400] selection:text-[#050505]">
+    <div id="logo-intro" aria-hidden="true">
+      <video
+        autoplay
+        muted
+        playsinline
+        preload="auto"
+        poster="/assets/aistudio/logo-animation-poster.png"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <source src="/assets/aistudio/logo-animation-transparent.webm" type="video/webm" />
+        <source src="/assets/aistudio/logo-animation.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <script>
+      (function () {
+        // Play the logo reveal on every full page load. Use ?intro=0 to skip.
+        var SKIP_INTRO = /(?:^|[?&])intro=0(?:&|$)/.test(window.location.search);
+        var overlay = document.getElementById('logo-intro');
+        var video = overlay ? overlay.querySelector('video') : null;
+        var introDone = false;
+        var fading = false;
+        var hardTimeout = null;
+        var startTimeout = null;
+
+        window.__skyroxIntroDone = false;
+
+        function finishIntro() {
+          if (introDone) return;
+          introDone = true;
+          if (overlay) {
+            overlay.remove();
+            overlay = null;
+          }
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          window.__skyroxIntroDone = true;
+          window.dispatchEvent(new CustomEvent('skyrox-intro-complete'));
+        }
+
+        function fadeOutAndRemove() {
+          if (introDone || fading || !overlay) return;
+          fading = true;
+          overlay.classList.add('logo-intro--hidden');
+          window.setTimeout(finishIntro, 450);
+        }
+
+        function skipIntro() {
+          if (hardTimeout) window.clearTimeout(hardTimeout);
+          if (startTimeout) window.clearTimeout(startTimeout);
+          finishIntro();
+        }
+
+        if (!overlay) {
+          finishIntro();
+          return;
+        }
+
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reduceMotion || SKIP_INTRO) {
+          skipIntro();
+          return;
+        }
+
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+
+        var started = false;
+        hardTimeout = window.setTimeout(fadeOutAndRemove, 4500);
+        startTimeout = window.setTimeout(function () {
+          if (!started) skipIntro();
+        }, 1500);
+
+        function markStarted() {
+          if (started) return;
+          started = true;
+          if (startTimeout) window.clearTimeout(startTimeout);
+        }
+
+        if (video) {
+          video.addEventListener('loadeddata', markStarted);
+          video.addEventListener('playing', markStarted);
+          video.addEventListener('timeupdate', markStarted);
+          video.addEventListener('ended', function () {
+            if (hardTimeout) window.clearTimeout(hardTimeout);
+            fadeOutAndRemove();
+          });
+          video.addEventListener('error', function () {
+            if (hardTimeout) window.clearTimeout(hardTimeout);
+            window.setTimeout(fadeOutAndRemove, 900);
+          });
+          if (video.readyState >= 2 || !video.paused || video.currentTime > 0) markStarted();
+          if (video.ended) {
+            if (hardTimeout) window.clearTimeout(hardTimeout);
+            fadeOutAndRemove();
+          }
+          var playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(function () {
+              if (hardTimeout) window.clearTimeout(hardTimeout);
+              window.setTimeout(fadeOutAndRemove, 900);
+            });
+          }
+        } else {
+          skipIntro();
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
